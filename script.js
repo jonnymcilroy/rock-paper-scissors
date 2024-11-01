@@ -47,6 +47,15 @@ function playRound(humanChoice, computerChoice) {
     return winner;
 }
 
+function declareWinner(humanScore, computerScore) {
+    if (computerScore > humanScore) {
+        console.log('Computer wins - better luck next time. :(')
+    } else if (humanScore > computerScore) {
+        console.log('Congratulations, you win! :)')
+    }
+    console.log('Want to play again? Simply refresh the browser.')
+}
+
 function playGame(numRounds) {
     let humanScore = 0;
     let computerScore = 0;
@@ -59,12 +68,7 @@ function playGame(numRounds) {
             humanScore++
         }
     }
-    if (computerScore > humanScore) {
-        console.log('Computer wins - better luck next time. :(')
-    } else if (humanScore > computerScore) {
-        console.log('Congratulations, you win! :)')
-    }
-    console.log('Want to play again? Simply refresh the browser.')
+    declareWinner(humanScore, computerScore)
 }
 
 playGame(5)
