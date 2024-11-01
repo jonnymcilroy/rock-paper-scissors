@@ -1,15 +1,15 @@
 function getComputerChoice() {
-    numChoice = Math.floor(Math.random() * 3)
-    choice = undefined
+    let numChoice = Math.floor(Math.random() * 3)
+    let choice = undefined
     switch (numChoice) {
         case 0:
-            choice = 'Rock'
+            choice = 'rock'
             break;
         case 1:
-            choice = 'Paper'
+            choice = 'paper'
             break;
         case 2:
-            choice = 'Scissors'
+            choice = 'scissors'
             break;
         default:
             console.log('Choice unsuccessful')
@@ -18,3 +18,14 @@ function getComputerChoice() {
     return choice
 }
 getComputerChoice()
+
+function getHumanChoice() {
+    const validInputs = ['rock', 'paper', 'scissors']
+    let userInput = undefined
+    do {
+        userInput = prompt("Please enter your choice? Rock, Paper or Scissors.").toLowerCase()
+    } while (!validInputs.includes(userInput))
+    console.log(userInput)
+}
+
+getHumanChoice()
