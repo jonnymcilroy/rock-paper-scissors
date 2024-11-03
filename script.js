@@ -15,9 +15,9 @@ function getComputerChoice() {
             choice = 'scissors'
             break;
         default:
-            console.log('Choice unsuccessful')
+        // console.log('Choice unsuccessful')
     }
-    console.log('Computer choice = ' + choice)
+    // console.log('Computer choice = ' + choice)
     return choice
 }
 
@@ -27,15 +27,15 @@ function playRound(humanChoice, computerChoice) {
         || computerChoice === 'scissors' && humanChoice === 'paper'
         || computerChoice === 'paper' && humanChoice === 'rock') {
         winner = 'computer'
-        console.log('You lose this round. :(')
+        // console.log('You lose this round. :(')
     } else if (humanChoice === 'rock' && computerChoice === 'scissors'
         || humanChoice === 'scissors' && computerChoice === 'paper'
         || humanChoice === 'paper' && computerChoice === 'rock') {
         winner = 'human'
-        console.log('You win this round. :)')
+        // console.log('You win this round. :)')
     } else {
         winner = 'draw'
-        console.log('This round is a draw.')
+        // console.log('This round is a draw.')
     }
     return winner;
 }
@@ -43,11 +43,11 @@ function playRound(humanChoice, computerChoice) {
 function declareWinner(humanScore, computerScore) {
     let winMessage = '';
     if (computerScore > humanScore) {
-        winMessage = 'Computer wins - better luck next time.';
+        winMessage = 'Computer wins';
     } else if (humanScore > computerScore) {
-        winMessage = 'Congratulations, you win!';
+        winMessage = 'You win';
     } else {
-        winMessage = 'This time it was a draw.'
+        winMessage = "It's a draw"
     }
     return winMessage;
 }
@@ -59,7 +59,7 @@ function playGame(numRounds, startRound) {
     let draws = 0;
     let currentRound = startRound;
 
-    console.log(`starting game. ${numRounds} total rounds.`);
+    // console.log(`starting game. ${numRounds} total rounds.`);
 
     displayRound(currentRound, numRounds);
     displayScore(humanScore, computerScore, draws);
@@ -69,11 +69,11 @@ function playGame(numRounds, startRound) {
 
     const handleRound = (event) => {
 
-        console.log('ROUND ' + currentRound)
+        // console.log('ROUND ' + currentRound)
 
         let target = event.target;
 
-        console.log(target.textContent);
+        // console.log(target.textContent);
 
         let humanChoice = target.textContent.toLowerCase();
         let computerChoice = getComputerChoice();
@@ -83,11 +83,11 @@ function playGame(numRounds, startRound) {
         if (winner === 'human') humanScore++;
         if (winner === 'draw') draws++;
         currentRound++
-        console.log('round incremented ' + currentRound);
+        // console.log('round incremented ' + currentRound);
 
         displayRound(currentRound, numRounds);
         displayScore(humanScore, computerScore, draws);
-        console.log(winner);
+        // console.log(winner);
         displayRoundwinner(humanChoice, winner);
 
         if (currentRound > numRounds) {
@@ -116,7 +116,7 @@ function resetGame() {
         if (event.target.classList.contains("resetButton")) {
             playGame(NUM_ROUNDS, START_ROUND);
             resetButton.remove();
-            console.log("game reset")
+            // console.log("game reset")
         }
         clearWinner();
         showButtons();
@@ -172,31 +172,31 @@ function getRoundWinnerMessage(humanChoice, winner) {
         case "human":
             switch (humanChoice) {
                 case "rock":
-                    message = "Rock beats scissors."
+                    message = "Rock beats scissors"
                     break;
                 case "paper":
-                    message = "Paper beats rock."
+                    message = "Paper beats rock"
                     break;
                 case "scissors":
-                    message = "Scissors beats paper."
+                    message = "Scissors beats paper"
                     break;
             }
             break;
         case "computer":
             switch (humanChoice) {
                 case "rock":
-                    message = "Paper beats rock.";
+                    message = "Paper beats rock";
                     break;
                 case "paper":
-                    message = "Scissors beats paper.";
+                    message = "Scissors beats paper";
                     break;
                 case "scissors":
-                    message = "Rock beats scissors"
+                    message = "Rock beats scissor"
                     break;
             }
             break;
         case "draw":
-            message = "This round is a draw.";
+            message = "This round is a draw";
             break;
     }
     return message;
@@ -218,4 +218,3 @@ playGame(NUM_ROUNDS, START_ROUND);
 const title = document.querySelector(".heading");
 const text = "Rock Paper Scissors";
 typewriter(title, text);
-
