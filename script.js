@@ -1,4 +1,4 @@
-const NUM_ROUNDS = 3;
+const NUM_ROUNDS = 5;
 const START_ROUND = 1;
 
 function getComputerChoice() {
@@ -88,7 +88,8 @@ function playGame(numRounds, startRound) {
 
         if (currentRound > numRounds) {
             buttons = document.querySelectorAll("#user-option button");
-            disableButtons(buttons);
+
+            hideButtons();
             displayWinner(humanScore, computerScore)
             userOption.removeEventListener("click", handleRound);
             resetGame()
@@ -98,7 +99,7 @@ function playGame(numRounds, startRound) {
 }
 
 function resetGame() {
-    const resultsContainer = document.querySelector(".reset");
+    const results = document.querySelector("#user-option");
     const existingResetButton = document.querySelector(".resetButton");
     if (existingResetButton) {
         existingResetButton.remove();
@@ -106,16 +107,16 @@ function resetGame() {
     const resetButton = document.createElement("button");
     resetButton.classList.add("resetButton");
     resetButton.textContent = "New Game";
-    resultsContainer.appendChild(resetButton);
+    results.appendChild(resetButton);
     resetButton.addEventListener("click", (event) => {
         if (event.target.classList.contains("resetButton")) {
             playGame(NUM_ROUNDS, START_ROUND);
             document.querySelector(".resetButton").remove();
-            document.querySelector(".results").textContent = "";
             console.log("game reset")
         }
-        buttons = document.querySelectorAll("#user-option button");
-        enableButtons(buttons);
+        //buttons = document.querySelectorAll("#user-option button");
+
+        showButtons();
     });
 
 }
@@ -137,15 +138,18 @@ function displayScore(humanScore, computerScore, draws) {
 }
 
 function displayWinner(humanScore, computerScore) {
-    let winner = document.querySelector(".results");
+    const winner = document.querySelector(".round");
     winner.textContent = declareWinner(humanScore, computerScore);
 };
 
-function disableButtons(buttons) {
-    buttons.forEach(button => button.disabled = true);
+
+
+function showButtons() {
+    const buttons = document.querySelectorAll("#user-option button");
+    buttons.forEach(button => button.style.display = "block");
 }
 
-function enableButtons(buttons) {
-    buttons.forEach(button => button.disabled = false);
+function hideButtons() {
+    const buttons = document.querySelectorAll("#user-option button");
+    buttons.forEach(button => button.style.display = "none");
 }
-
