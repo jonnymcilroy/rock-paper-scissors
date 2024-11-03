@@ -53,6 +53,7 @@ function declareWinner(humanScore, computerScore) {
 }
 
 function playGame(numRounds, startRound) {
+
     let humanScore = 0;
     let computerScore = 0;
     let draws = 0;
@@ -120,7 +121,6 @@ function resetGame() {
     });
 
 }
-playGame(NUM_ROUNDS, START_ROUND)
 
 
 // ui stuff
@@ -129,7 +129,7 @@ function displayRound(roundNumber, totalRounds) {
     if (roundNumber > totalRounds) {
         roundNumber = totalRounds;
     }
-    round.textContent = `Round ${roundNumber}`;
+    round.textContent = `Round ${roundNumber}/${NUM_ROUNDS}`;
 };
 
 function displayScore(humanScore, computerScore, draws) {
@@ -145,9 +145,29 @@ function displayWinner(humanScore, computerScore) {
 function showButtons() {
     const buttons = document.querySelectorAll("#user-option button");
     buttons.forEach(button => button.style.display = "block");
-}
+};
 
 function hideButtons() {
     const buttons = document.querySelectorAll("#user-option button");
     buttons.forEach(button => button.style.display = "none");
-}
+};
+
+
+function typewriter(element, text, i = 0) {
+    element.textContent += text[i];
+
+    if (i === text.length - 1) {
+        return;
+    }
+
+    setTimeout(() => typewriter(element, text, i + 1), 50);
+
+
+};
+
+// start the game
+playGame(NUM_ROUNDS, START_ROUND);
+const title = document.querySelector(".heading");
+const text = "Rock Paper Scissors";
+typewriter(title, text);
+
