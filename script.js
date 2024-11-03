@@ -141,7 +141,8 @@ function displayScore(humanScore, computerScore, draws) {
 
 function displayWinner(humanScore, computerScore) {
     const winner = document.querySelector(".winner");
-    winner.textContent = declareWinner(humanScore, computerScore);
+    const text = declareWinner(humanScore, computerScore);
+    typewriter(winner, text)
 };
 
 function clearWinner() {
