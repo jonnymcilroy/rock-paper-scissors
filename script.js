@@ -1,5 +1,6 @@
 
 const NUM_ROUNDS = 3;
+const START_ROUND = 1;
 
 function getComputerChoice() {
     let numChoice = Math.floor(Math.random() * 3)
@@ -58,25 +59,20 @@ function declareWinner(humanScore, computerScore) {
     return winMessage;
 }
 
-function playGame(numRounds) {
+function playGame(numRounds, startRound) {
     let humanScore = 0;
     let computerScore = 0;
-    let currentRound = 1;
+    let currentRound = startRound;
 
     console.log(`starting game. ${numRounds} total rounds.`);
 
-    displayRound(currentRound, numRounds); // Pass numRounds as an argument
+    displayRound(currentRound, numRounds);
 
-    let userOption = document.querySelector("#userOption");
+    const userOption = document.querySelector("#user-option");
 
-    userOption.addEventListener("click", (event) => {
+    const handleRound = (event) => {
 
         console.log('ROUND ' + currentRound)
-        // stop game continuing if round number exceeded
-        if (currentRound > numRounds) {
-            console.log('game over. The winner is ');
-            return;
-        }
 
         let target = event.target;
 
@@ -85,24 +81,23 @@ function playGame(numRounds) {
         let input = target.textContent.toLowerCase();
         let computerChoice = getComputerChoice();
 
-        let winner = playRound(getHumanChoice(input), computerChoice)
-
-        if (winner === 'computer') {
-            computerScore++
-        } else if (winner === 'human') {
-            humanScore++
-        }
+        const winner = playRound(getHumanChoice(input), computerChoice)
+        if (winner === 'computer') computerScore++;
+        if (winner === 'human') humanScore++;
 
         currentRound++
         console.log('round incremented ' + currentRound);
         displayRound(currentRound, numRounds);
+
         if (currentRound > numRounds) {
-            buttons = document.querySelectorAll("#userOption button");
+            buttons = document.querySelectorAll("#user-option button");
             disableButtons(buttons);
             displayWinner(humanScore, computerScore)
+            userOption.removeEventListener("click", handleRound);
             resetGame() // Remove unnecessary arguments
         }
-    });
+    };
+    userOption.addEventListener("click", handleRound);
 }
 
 // ui stuff
@@ -114,12 +109,13 @@ function displayRound(roundNumber, totalRounds) {
     round.textContent = `Round ${roundNumber}`;
 };
 
+function displayScore(humanScore, computerScore) {
+
+}
+
 function displayWinner(humanScore, computerScore) {
     let winner = document.querySelector(".results");
-
     winner.textContent = declareWinner(humanScore, computerScore)
-
-
 };
 
 function disableButtons(buttons) {
@@ -142,16 +138,16 @@ function resetGame() {
     resultsContainer.appendChild(resetButton);
     resetButton.addEventListener("click", (event) => {
         if (event.target.classList.contains("resetButton")) {
-            playGame(NUM_ROUNDS);
+            playGame(NUM_ROUNDS, START_ROUND);
             document.querySelector(".resetButton").remove();
             document.querySelector(".results").textContent = "";
-
+            console.log("game reset")
         }
-        buttons = document.querySelectorAll("#userOption button");
+        buttons = document.querySelectorAll("#user-option button");
         enableButtons(buttons);
     });
 
 }
 
-playGame(NUM_ROUNDS)
+playGame(NUM_ROUNDS, START_ROUND)
 
