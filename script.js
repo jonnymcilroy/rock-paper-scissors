@@ -1,3 +1,6 @@
+
+const NUM_ROUNDS = 3;
+
 function getComputerChoice() {
     let numChoice = Math.floor(Math.random() * 3)
     let choice = undefined
@@ -18,13 +21,9 @@ function getComputerChoice() {
     return choice
 }
 
-function getHumanChoice() {
-    const validInputs = ['rock', 'paper', 'scissors']
-    let userInput = undefined
-    do {
-        userInput = prompt("Please enter your choice? Rock, Paper or Scissors.").toLowerCase()
-    } while (!validInputs.includes(userInput))
-    console.log('Human choice = ' + userInput)
+function getHumanChoice(input) {
+    let userInput = input
+
     return userInput
 }
 
@@ -48,27 +47,100 @@ function playRound(humanChoice, computerChoice) {
 }
 
 function declareWinner(humanScore, computerScore) {
+    let winMessage = '';
     if (computerScore > humanScore) {
-        console.log('Computer wins - better luck next time. :(')
+        winMessage = 'Computer wins - better luck next time. :(';
     } else if (humanScore > computerScore) {
-        console.log('Congratulations, you win! :)')
+        winMessage = 'Congratulations, you win! :)';
+    } else {
+        winMessage = 'This time it was a draw'
     }
-    console.log('Want to play again? Simply refresh the browser.')
+    return winMessage;
 }
 
 function playGame(numRounds) {
     let humanScore = 0;
     let computerScore = 0;
-    for (let i = 1; i <= numRounds; i++) {
-        console.log(`Round number ${i}`)
-        let winner = playRound(getHumanChoice(), getComputerChoice())
+    let currentRound = 1;
+
+    console.log(`starting game. ${numRounds} total rounds.`);
+
+    displayRound(currentRound, numRounds); // Pass numRounds as an argument
+
+    let userOption = document.querySelector("#userOption");
+
+    userOption.addEventListener("click", (event) => {
+
+        console.log('ROUND ' + currentRound)
+        // stop game continuing if round number exceeded
+        if (currentRound > numRounds) {
+            console.log('game over. The winner is ');
+            return;
+        }
+
+        let target = event.target;
+
+        console.log(target.textContent);
+
+        let input = target.textContent.toLowerCase();
+        let computerChoice = getComputerChoice();
+
+        let winner = playRound(getHumanChoice(input), computerChoice)
+
         if (winner === 'computer') {
             computerScore++
         } else if (winner === 'human') {
             humanScore++
         }
-    }
-    declareWinner(humanScore, computerScore)
+
+        currentRound++
+        console.log('round incremented ' + currentRound);
+        if (currentRound > numRounds) {
+            displayWinner(humanScore, computerScore)
+            resetGame() // Remove unnecessary arguments
+        } else {
+            displayRound(currentRound, numRounds); // Pass numRounds as an argument
+        }
+    });
 }
 
-playGame(5)
+// ui stuff
+function displayRound(roundNumber, totalRounds) {
+    let round = document.querySelector(".round");
+    if (roundNumber > totalRounds) {
+        roundNumber = totalRounds;
+    }
+    round.textContent = `Round ${roundNumber}`;
+};
+
+function displayWinner(humanScore, computerScore) {
+    let winner = document.querySelector(".results");
+
+    winner.textContent = declareWinner(humanScore, computerScore)
+
+
+};
+
+function resetGame() {
+    const resultsContainer = document.querySelector(".reset");
+    const existingResetButton = document.querySelector(".resetButton");
+    if (existingResetButton) {
+        existingResetButton.remove();
+    }
+    const resetButton = document.createElement("button");
+    resetButton.classList.add("resetButton");
+    resetButton.textContent = "New Game";
+    resultsContainer.appendChild(resetButton);
+    resetButton.addEventListener("click", (event) => {
+        if (event.target.classList.contains("resetButton")) {
+            playGame(NUM_ROUNDS);
+            document.querySelector(".resetButton").remove();
+            document.querySelector(".results").textContent = "";
+
+        }
+    });
+    playGame(NUM_ROUNDS);
+}
+
+playGame(NUM_ROUNDS)
+
