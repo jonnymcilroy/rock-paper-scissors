@@ -63,7 +63,8 @@ function playGame(numRounds, startRound) {
     displayRound(currentRound, numRounds);
     displayScore(humanScore, computerScore, draws);
 
-    const userOption = document.querySelector("#user-option");
+    const userOption = Array.from(document.querySelectorAll("#user-option button"));
+
 
     const handleRound = (event) => {
 
@@ -87,19 +88,19 @@ function playGame(numRounds, startRound) {
         displayScore(humanScore, computerScore, draws)
 
         if (currentRound > numRounds) {
-            buttons = document.querySelectorAll("#user-option button");
-
             hideButtons();
             displayWinner(humanScore, computerScore)
-            userOption.removeEventListener("click", handleRound);
+            userOption.forEach(button => button.removeEventListener("click", handleRound));
             resetGame()
         }
     };
-    userOption.addEventListener("click", handleRound);
+
+    userOption.forEach(option => option.addEventListener("click", handleRound));
 }
 
 function resetGame() {
     const results = document.querySelector("#user-option");
+
     const existingResetButton = document.querySelector(".resetButton");
     if (existingResetButton) {
         existingResetButton.remove();
@@ -111,7 +112,7 @@ function resetGame() {
     resetButton.addEventListener("click", (event) => {
         if (event.target.classList.contains("resetButton")) {
             playGame(NUM_ROUNDS, START_ROUND);
-            document.querySelector(".resetButton").remove();
+            resetButton.remove();
             console.log("game reset")
         }
         //buttons = document.querySelectorAll("#user-option button");
@@ -141,8 +142,6 @@ function displayWinner(humanScore, computerScore) {
     const winner = document.querySelector(".round");
     winner.textContent = declareWinner(humanScore, computerScore);
 };
-
-
 
 function showButtons() {
     const buttons = document.querySelectorAll("#user-option button");
