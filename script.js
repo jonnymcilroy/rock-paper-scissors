@@ -95,11 +95,12 @@ function playGame(numRounds) {
 
         currentRound++
         console.log('round incremented ' + currentRound);
+        displayRound(currentRound, numRounds);
         if (currentRound > numRounds) {
+            buttons = document.querySelectorAll("#userOption button");
+            disableButtons(buttons);
             displayWinner(humanScore, computerScore)
             resetGame() // Remove unnecessary arguments
-        } else {
-            displayRound(currentRound, numRounds); // Pass numRounds as an argument
         }
     });
 }
@@ -121,6 +122,14 @@ function displayWinner(humanScore, computerScore) {
 
 };
 
+function disableButtons(buttons) {
+    buttons.forEach(button => button.disabled = true);
+}
+
+function enableButtons(buttons) {
+    buttons.forEach(button => button.disabled = false);
+}
+
 function resetGame() {
     const resultsContainer = document.querySelector(".reset");
     const existingResetButton = document.querySelector(".resetButton");
@@ -138,8 +147,10 @@ function resetGame() {
             document.querySelector(".results").textContent = "";
 
         }
+        buttons = document.querySelectorAll("#userOption button");
+        enableButtons(buttons);
     });
-    playGame(NUM_ROUNDS);
+
 }
 
 playGame(NUM_ROUNDS)
