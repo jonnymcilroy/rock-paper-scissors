@@ -19,9 +19,14 @@ body {
 }
 
 .round,
-.round-winner {
+.round-winner,
+.winner {
     text-align: center;
     font-size: 32px;
+}
+
+.round {
+    text-decoration: underline;
 }
 
 .heading {
@@ -41,6 +46,12 @@ body {
     flex: 1;
 }
 
+.winner {
+    min-height: 65px;
+    text-decoration: underline;
+    font-size: 48px;
+}
+
 ul {
     list-style: none;
     display: flex;
@@ -49,14 +60,15 @@ ul {
 }
 
 button {
-    font-family: 'Courier New', Courier, monospace;
-    border-radius: 12px;
-    border: 5px solid rgb(0, 165, 0);
-    min-width: 110px;
+    border-radius: 8px;
+    color: rgb(0, 165, 0);
+    border: 4px solid rgb(0, 165, 0);
+    background-color: black;
+    min-width: 145px;
     height: 50px;
     font-size: 24px;
+    font-family: 'Courier New', Courier, monospace;
 }
-
 
 
 .footer {

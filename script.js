@@ -75,10 +75,10 @@ function playGame(numRounds, startRound) {
 
         console.log(target.textContent);
 
-        let input = target.textContent.toLowerCase();
+        let humanChoice = target.textContent.toLowerCase();
         let computerChoice = getComputerChoice();
 
-        const winner = playRound(input, computerChoice)
+        const winner = playRound(humanChoice, computerChoice);
         if (winner === 'computer') computerScore++;
         if (winner === 'human') humanScore++;
         if (winner === 'draw') draws++;
@@ -86,7 +86,9 @@ function playGame(numRounds, startRound) {
         console.log('round incremented ' + currentRound);
 
         displayRound(currentRound, numRounds);
-        displayScore(humanScore, computerScore, draws)
+        displayScore(humanScore, computerScore, draws);
+        console.log(winner);
+        displayRoundwinner(humanChoice, winner);
 
         if (currentRound > numRounds) {
             hideButtons();
@@ -116,7 +118,7 @@ function resetGame() {
             resetButton.remove();
             console.log("game reset")
         }
-
+        clearWinner();
         showButtons();
     });
 
@@ -138,9 +140,15 @@ function displayScore(humanScore, computerScore, draws) {
 }
 
 function displayWinner(humanScore, computerScore) {
-    const winner = document.querySelector(".round");
+    const winner = document.querySelector(".winner");
     winner.textContent = declareWinner(humanScore, computerScore);
 };
+
+function clearWinner() {
+    const winner = document.querySelector(".winner");
+    winner.textContent = "";
+}
+
 
 function showButtons() {
     const buttons = document.querySelectorAll("#user-option button");
@@ -152,34 +160,50 @@ function hideButtons() {
     buttons.forEach(button => button.style.display = "none");
 };
 
+function displayRoundwinner(humanChoice, winner) {
+    const roundWinner = document.querySelector(".round-winner");
+    roundWinner.textContent = getRoundWinnerMessage(humanChoice, winner);
+}
+
+
 function getRoundWinnerMessage(humanChoice, winner) {
     let message = "";
     switch (winner) {
         case "human":
             switch (humanChoice) {
                 case "rock":
-                    message = "Rock beats scissors.";
+                    message = "Rock beats scissors."
+                    break;
                 case "paper":
-                    message = "Paper beats rock.";
+                    message = "Paper beats rock."
+                    break;
                 case "scissors":
-                    message = "Scissors beats paper.";
+                    message = "Scissors beats paper."
+                    break;
             }
+            break;
         case "computer":
             switch (humanChoice) {
                 case "rock":
                     message = "Paper beats rock.";
+                    break;
                 case "paper":
-                    message = "Scossiors beats paper.";
+                    message = "Scissors beats paper.";
+                    break;
                 case "scissors":
-                    message = "Rock beats scissors";
+                    message = "Rock beats scissors"
+                    break;
             }
+            break;
         case "draw":
             message = "This round is a draw.";
-
+            break;
     }
     return message;
 
 }
+
+
 
 function typewriter(element, text, i = 0) {
     element.textContent += text[i];
