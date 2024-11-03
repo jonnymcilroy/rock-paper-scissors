@@ -25,6 +25,10 @@ body {
     font-size: 32px;
 }
 
+.round-winner {
+    padding-top: 8px;
+}
+
 .round {
     text-decoration: underline;
 }

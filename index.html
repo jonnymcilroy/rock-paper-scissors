@@ -6,36 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock Paper Scissors</title>
   <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
-
   <div class="heading"></div>
 
-
   <div class="container">
-    <div class="round">Round 1</div>
-    <div class="round-winner"> Choose your weapon.</div>
+    <!-- Initialize round info in JavaScript, not HTML, to avoid conflicts -->
+    <div class="round"></div>
+    <div class="round-winner">Choose your weapon</div>
+
     <ul id="user-option">
       <li><button>Rock</button></li>
       <li><button>Paper</button></li>
       <li><button>Scissors</button></li>
     </ul>
+
+
     <div class="reset"></div>
 
     <div class="scoreboard">
       <div class="score"></div>
     </div>
+
     <div class="winner"></div>
-
-
-
   </div>
 
   <div class="footer">Jonny McIlroy - The Odin Project</div>
 
+
+  <script src="script.js" defer></script>
 </body>
-<script src="script.js"></script>
 
 </html>
