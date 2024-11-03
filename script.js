@@ -43,11 +43,11 @@ function playRound(humanChoice, computerChoice) {
 function declareWinner(humanScore, computerScore) {
     let winMessage = '';
     if (computerScore > humanScore) {
-        winMessage = 'Computer wins - better luck next time. :(';
+        winMessage = 'Computer wins - better luck next time.';
     } else if (humanScore > computerScore) {
-        winMessage = 'Congratulations, you win! :)';
+        winMessage = 'Congratulations, you win!';
     } else {
-        winMessage = 'This time it was a draw'
+        winMessage = 'This time it was a draw.'
     }
     return winMessage;
 }
@@ -115,7 +115,6 @@ function resetGame() {
             resetButton.remove();
             console.log("game reset")
         }
-        //buttons = document.querySelectorAll("#user-option button");
 
         showButtons();
     });
