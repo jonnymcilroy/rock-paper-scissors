@@ -152,17 +152,41 @@ function hideButtons() {
     buttons.forEach(button => button.style.display = "none");
 };
 
+function getRoundWinnerMessage(humanChoice, winner) {
+    let message = "";
+    switch (winner) {
+        case "human":
+            switch (humanChoice) {
+                case "rock":
+                    message = "Rock beats scissors.";
+                case "paper":
+                    message = "Paper beats rock.";
+                case "scissors":
+                    message = "Scissors beats paper.";
+            }
+        case "computer":
+            switch (humanChoice) {
+                case "rock":
+                    message = "Paper beats rock.";
+                case "paper":
+                    message = "Scossiors beats paper.";
+                case "scissors":
+                    message = "Rock beats scissors";
+            }
+        case "draw":
+            message = "This round is a draw.";
+
+    }
+    return message;
+
+}
 
 function typewriter(element, text, i = 0) {
     element.textContent += text[i];
-
     if (i === text.length - 1) {
         return;
     }
-
     setTimeout(() => typewriter(element, text, i + 1), 50);
-
-
 };
 
 // start the game

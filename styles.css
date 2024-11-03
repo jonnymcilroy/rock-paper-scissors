@@ -18,7 +18,8 @@ body {
 
 }
 
-.round {
+.round,
+.round-winner {
     text-align: center;
     font-size: 32px;
 }
