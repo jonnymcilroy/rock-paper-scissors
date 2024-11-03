@@ -1,4 +1,3 @@
-
 const NUM_ROUNDS = 3;
 const START_ROUND = 1;
 
@@ -20,12 +19,6 @@ function getComputerChoice() {
     }
     console.log('Computer choice = ' + choice)
     return choice
-}
-
-function getHumanChoice(input) {
-    let userInput = input
-
-    return userInput
 }
 
 function playRound(humanChoice, computerChoice) {
@@ -62,11 +55,13 @@ function declareWinner(humanScore, computerScore) {
 function playGame(numRounds, startRound) {
     let humanScore = 0;
     let computerScore = 0;
+    let draws = 0;
     let currentRound = startRound;
 
     console.log(`starting game. ${numRounds} total rounds.`);
 
     displayRound(currentRound, numRounds);
+    displayScore(humanScore, computerScore, draws);
 
     const userOption = document.querySelector("#user-option");
 
@@ -81,49 +76,25 @@ function playGame(numRounds, startRound) {
         let input = target.textContent.toLowerCase();
         let computerChoice = getComputerChoice();
 
-        const winner = playRound(getHumanChoice(input), computerChoice)
+        const winner = playRound(input, computerChoice)
         if (winner === 'computer') computerScore++;
         if (winner === 'human') humanScore++;
-
+        if (winner === 'draw') draws++;
         currentRound++
         console.log('round incremented ' + currentRound);
+
         displayRound(currentRound, numRounds);
+        displayScore(humanScore, computerScore, draws)
 
         if (currentRound > numRounds) {
             buttons = document.querySelectorAll("#user-option button");
             disableButtons(buttons);
             displayWinner(humanScore, computerScore)
             userOption.removeEventListener("click", handleRound);
-            resetGame() // Remove unnecessary arguments
+            resetGame()
         }
     };
     userOption.addEventListener("click", handleRound);
-}
-
-// ui stuff
-function displayRound(roundNumber, totalRounds) {
-    let round = document.querySelector(".round");
-    if (roundNumber > totalRounds) {
-        roundNumber = totalRounds;
-    }
-    round.textContent = `Round ${roundNumber}`;
-};
-
-function displayScore(humanScore, computerScore) {
-
-}
-
-function displayWinner(humanScore, computerScore) {
-    let winner = document.querySelector(".results");
-    winner.textContent = declareWinner(humanScore, computerScore)
-};
-
-function disableButtons(buttons) {
-    buttons.forEach(button => button.disabled = true);
-}
-
-function enableButtons(buttons) {
-    buttons.forEach(button => button.disabled = false);
 }
 
 function resetGame() {
@@ -148,6 +119,33 @@ function resetGame() {
     });
 
 }
-
 playGame(NUM_ROUNDS, START_ROUND)
+
+
+// ui stuff
+function displayRound(roundNumber, totalRounds) {
+    const round = document.querySelector(".round");
+    if (roundNumber > totalRounds) {
+        roundNumber = totalRounds;
+    }
+    round.textContent = `Round ${roundNumber}`;
+};
+
+function displayScore(humanScore, computerScore, draws) {
+    const scoreboard = document.querySelector(".score");
+    scoreboard.textContent = `Wins - ${humanScore} || Draw - ${draws} || Loss - ${computerScore}`;
+}
+
+function displayWinner(humanScore, computerScore) {
+    let winner = document.querySelector(".results");
+    winner.textContent = declareWinner(humanScore, computerScore);
+};
+
+function disableButtons(buttons) {
+    buttons.forEach(button => button.disabled = true);
+}
+
+function enableButtons(buttons) {
+    buttons.forEach(button => button.disabled = false);
+}
 
